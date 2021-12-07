@@ -25,7 +25,13 @@ pipeline {
             }
         }
 
-
+        stage('sonar qulaity check') { 
+            script {
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                 sh 'mvn sonar:sonar'
+                }
+            }
+        }
         stage('Build Docker image'){
             steps {
                 sh 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
